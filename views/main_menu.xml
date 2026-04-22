@@ -1,0 +1,16 @@
+<odoo>
+    <menuitem
+            id="master_menu"
+            name="Hospital"
+    />
+    <menuitem
+            id="second_menu"
+            name="Details"
+            parent="master_menu"
+    />
+    <menuitem
+        id="appointment_id"
+        name="Appointment"
+        parent="master_menu"
+    />
+</odoo>

@@ -1,0 +1,91 @@
+<odoo>
+
+    <record id="patient_tree_view" model="ir.ui.view">
+        <field name="name">patient.tree</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="patient Name"/>
+                <field name="gender" string="patient Gender"/>
+                <field name="age" string="patient Age"/>
+                <field name="code" string="patient Code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hospital_form_view" model="ir.ui.view">
+        <field name="name">hospital.patient</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" string="Patient Name: "/>
+                            <field name="gender" string="Patient Gender: "/>
+                        </group>
+                        <group>
+                            <field name="age" string="Patient Age:"/>
+                            <field name="code" string="Patient Code:"/>
+                            <field name="active" string="Active" invisible='1'/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" group="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="patient_search_view" model="ir.ui.view">
+        <field name="name">search.paitent</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Patient Name"
+                       filter_domain="['|',('name','ilike',self),('code','ilike',self)]"/>
+                <field name="age" string="Patient Age"/>
+
+                <filter name="archive" string="Archive" domain="[('active','=',False)]" />
+
+                <separator/>
+
+                <filter name="filter_gender" string="Gender Male less that 40"
+                        domain="['&amp;',('gender','=','male'),('age','&lt;=',40)]"/>
+                <separator/>
+                <filter name="filter_gender" string="Gender Female more than 30"
+                        domain="['&amp;',('age','&gt;=',30),('gender','=','female')]"/>
+
+                <group expand="0" string="group by">
+                    <filter string="gender" name="group_by_gender" context="{'group_by':'gender'}"/>
+                    <filter string="age" name="age" context="{'group_by':'age'}"/>
+                </group>
+
+                <searchpanel>
+                    <field name="gender" select="multi" icon="fa-users" enable_counters="True"/>
+                </searchpanel>
+
+            </search>
+        </field>
+
+    </record>
+
+
+    <record id="patient_details_window" model="ir.actions.act_window">
+        <field name="name">patient details</field>
+        <field name="res_model">hospital.patient</field>
+        <field name="context">{'search_default_group_by_gender':1}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="child_menu"
+            name="Patient Details"
+            parent="second_menu"
+            action="patient_details_window"
+    />
+</odoo>

@@ -1,0 +1,54 @@
+<odoo>
+
+    <record id="appointment_tree_view" model="ir.ui.view">
+        <field name="name">appointment.tree</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="patient_id" string="Patient Name"/>
+                <field name="patient_gender" string="Patient Gender"/>
+                <field name="date_day" string="Day Created"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="appointment_form_view" model="ir.ui.view">
+        <field name="name">hospital.appointment</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="patient_id" string="Patient Name"/>
+
+                            <field name="date_now" string="Time Created"/>
+                        </group>
+                        <group>
+                            <field name="patient_gender" string="Patient Gender"/>
+                            <field name="date_day" string="Day"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" group="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="appointment_action" model="ir.actions.act_window">
+        <field name="name">patient appointment</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="appointment_details"
+            name="Patient Appointmnet"
+            parent="appointment_id"
+            action="appointment_action"
+    />
+</odoo>
