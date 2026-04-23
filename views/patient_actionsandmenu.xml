@@ -23,6 +23,7 @@
                         <group>
                             <field name="name" string="Patient Name: "/>
                             <field name="gender" string="Patient Gender: "/>
+                            <field name="birth_day" string="Date of Birth: "/>
                         </group>
                         <group>
                             <field name="age" string="Patient Age:"/>
@@ -30,6 +31,28 @@
                             <field name="active" string="Active" invisible='1'/>
                         </group>
                     </group>
+
+                    <notebook>
+                        <page string="N and C">
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                            </group>
+                        </page>
+                        <page string="Gender">
+                            <group>
+                                <field name="gender"/>
+                            </group>
+                        </page>
+                    </notebook>
+
+                    <notebook>
+                        <page string="Prescription">
+                            <group>
+                                <field name="prescription" placeholder="Enter Your Prescription"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" group="base.group_user"/>
@@ -48,22 +71,22 @@
             <search>
                 <field name="name" string="Patient Name"
                        filter_domain="['|',('name','ilike',self),('code','ilike',self)]"/>
-                <field name="age" string="Patient Age"/>
+                <!--                <field name="age" string="Patient Age"/>-->
 
-                <filter name="archive" string="Archive" domain="[('active','=',False)]" />
+                <filter name="archive" string="Archive" domain="[('active','=',False)]"/>
 
-                <separator/>
+                <!--                <separator/>-->
 
-                <filter name="filter_gender" string="Gender Male less that 40"
-                        domain="['&amp;',('gender','=','male'),('age','&lt;=',40)]"/>
-                <separator/>
-                <filter name="filter_gender" string="Gender Female more than 30"
-                        domain="['&amp;',('age','&gt;=',30),('gender','=','female')]"/>
+                <!--                <filter name="filter_gender" string="Gender Male less that 40"-->
+                <!--                        domain="['&amp;',('gender','=','male'),('age','&lt;=',40)]"/>-->
+                <!--                <separator/>-->
+                <!--                <filter name="filter_gender" string="Gender Female more than 30"-->
+                <!--                        domain="['&amp;',('age','&gt;=',30),('gender','=','female')]"/>-->
 
-                <group expand="0" string="group by">
-                    <filter string="gender" name="group_by_gender" context="{'group_by':'gender'}"/>
-                    <filter string="age" name="age" context="{'group_by':'age'}"/>
-                </group>
+                <!--                <group expand="0" string="group by">-->
+                <!--                    <filter string="gender" name="group_by_gender" context="{'group_by':'gender'}"/>-->
+                <!--                    <filter string="age" name="age" context="{'group_by':'age'}"/>-->
+                <!--                </group>-->
 
                 <searchpanel>
                     <field name="gender" select="multi" icon="fa-users" enable_counters="True"/>

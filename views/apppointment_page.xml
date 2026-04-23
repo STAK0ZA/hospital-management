@@ -26,6 +26,7 @@
                         </group>
                         <group>
                             <field name="patient_gender" string="Patient Gender"/>
+                            <field name="patient_ref" string="Patient Code"/>
                             <field name="date_day" string="Day"/>
                         </group>
                     </group>
