@@ -13,8 +13,26 @@ class HospitalPatient(models.Model):
     gender=fields.Selection([('male','Male'),('female','Female')],string="Gender")
     code=fields.Char(string="Code")
     birth_day=fields.Date(string="Date of Birth")
+    priority=fields.Selection([
+        ("0","Good"),
+        ("1","Very Good"),
+        ("2","Excellent"),
+        ("3","brilliant"),
+    ], string="Priority")
+
+    state=fields.Selection([
+        ("start","Start"),
+        ("in_progress","In Progress"),
+        ("draft","Draft"),
+        ("done","Done"),
+        ("cancel","Cancel"),
+    ], string="Status" ,default="start" ,required=True)
+
+
 
     prescription=fields.Html(string="Prescription")
+
+
 
     active=fields.Boolean(string="Active",default=True)
 
@@ -26,3 +44,6 @@ class HospitalPatient(models.Model):
                 rec.age=today.year-rec.birth_day.year
             else:
                 rec.age= 1
+
+    def hello(self):
+        print("hello!!!!!!!!!!!!!!!!!!!!!!!!")

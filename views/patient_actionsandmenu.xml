@@ -18,7 +18,17 @@
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="hello" type="object"  string="Say Hi" class="oe_highlight" confirm="Execute Python Code?"/>
+                    <button name="%(hospital_app.appointment_action)d" type="action"  string="Appointment" class="oe_highlight" confirm="Go to page ?"/>
+                    <field  name="state" widget="statusbar" nolabel="1" options="{'clickable':'1'}" statusbar_visible="start,in_progress,draft,done"/>
+                </header>
                 <sheet>
+                    <div>
+                        <h3>
+                            <field name="priority" widget="priority"/>
+                        </h3>
+                    </div>
                     <group>
                         <group>
                             <field name="name" string="Patient Name: "/>
