@@ -47,3 +47,11 @@ class HospitalPatient(models.Model):
 
     def hello(self):
         print("hello!!!!!!!!!!!!!!!!!!!!!!!!")
+        return{
+            'effect':{
+                'fadeout':'slow',
+                'message':'Hello User',
+                'type':'rainbow_man'
+
+            }
+        }

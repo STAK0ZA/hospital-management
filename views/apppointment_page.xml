@@ -4,10 +4,19 @@
         <field name="name">appointment.tree</field>
         <field name="model">hospital.appointment</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree sample="1" multi_edit="1" decoration-success="state=='done'"  decoration-danger="state=='cancel'" decoration-info="state=='draft'" decoration-warning="state=='in_consultation'">
                 <field name="patient_id" string="Patient Name"/>
                 <field name="patient_gender" string="Patient Gender"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
                 <field name="date_day" string="Day Created"/>
+                <field name="activity_ids" widget="list_activity"/>
+                <field name="state" string="State" widget="badge"
+                       decoration-success="state=='done'"
+                       decoration-danger="state=='cancel'"
+                       decoration-info="state=='draft'"
+                       decoration-warning="state=='in_consultation'"
+                />
+                <field name="birth_day" string="Patient Birth" optional="hide"/>
             </tree>
         </field>
     </record>
@@ -17,11 +26,18 @@
         <field name="model">hospital.appointment</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="draft_state" type="object" string="Draft" class="oe_highlight" invisible="state != 'in_consultation'" data_hotkey="z"/>
+                    <button name="in_consultation_state" type="object" string="In Consultation" class="oe_highlight" invisible="state != 'draft'" data_hotkey="x"/>
+                    <button name="done_state" type="object" string="Done" class="oe_highlight"  invisible="state != 'in_consultation'" data_hotkey="c"/>
+                    <button name="cancel_state" type="object" string="Cancel" class="oe_highlight" invisible="state != 'in_consultation'" data_hotkey="v"/>
+                    <field  name="state" widget="statusbar" nolabel="1" options="{'clickable':'1'}" statusbar_visible="start,in_progress,draft,done,in_consultation" />
+                </header>
                 <sheet>
                     <group>
                         <group>
-                            <field name="patient_id" string="Patient Name"/>
-
+                            <field name="patient_id" string="Patient Name" help="User name"/>
+                            <field name="user_id" widget="many2one_avatar" default_focus="1"/>
                             <field name="date_now" string="Time Created"/>
                         </group>
                         <group>
@@ -30,6 +46,13 @@
                             <field name="date_day" string="Day"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="html_field">
+                            <group>
+                                <field string="Html: " name="html_field" options="{'collaborative':true ,'resizable':true}"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" group="base.group_user"/>

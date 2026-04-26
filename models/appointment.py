@@ -9,13 +9,43 @@ class HospitalAppointment(models.Model):
     _description = "Hospital Appointment"
 
     patient_id = fields.Many2one('hospital.patient' , string="Patient Name")
-    date_now=fields.Datetime(string="Date of Appointment" ,default=fields.Datetime.now())
+    date_now=fields.Datetime(string="Date of Appointment" ,default=fields.Datetime.now() , help="Created field")
     date_day=fields.Date(string="Date of Appointment" , default=fields.Date.context_today)
     patient_gender=fields.Selection(string="Patient Gender" , related="patient_id.gender")
+    birth_day=fields.Date(string="Patient Birth" , related="patient_id.birth_day")
     patient_ref=fields.Char(string="Patient Reference")
+    html_field=fields.Html(string="HTML Field")
+    state=fields.Selection([
+        ("draft","Draft"),
+        ("in_consultation","In Consultation"),
+        ("done","Done"),
+        ("cancel","Cancel"),
+    ], string="Status" ,default="draft" ,required=True)
+
+
+
+    user_id=fields.Many2one('res.users' , string="User" , required=True)
 
     @api.onchange('patient_id')
     def onchange_patient_id(self):
         self.patient_ref = self.patient_id.code
+
+    def draft_state(self):
+        for rec in self:
+            rec.state = "draft"
+
+    def in_consultation_state(self):
+        for rec in self:
+            rec.state = "in_consultation"
+
+    def done_state(self):
+        for rec in self:
+            rec.state = "done"
+
+
+    def cancel_state(self):
+        for rec in self:
+            rec.state = "cancel"
+
 
 
