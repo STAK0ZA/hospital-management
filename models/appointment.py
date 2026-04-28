@@ -22,9 +22,13 @@ class HospitalAppointment(models.Model):
         ("cancel","Cancel"),
     ], string="Status" ,default="draft" ,required=True)
 
-
+    medicine_line_ids=fields.One2many("hospital.medicine.line","appointment_id",string="Medicine")
 
     user_id=fields.Many2one('res.users' , string="User" , required=True)
+
+    show_col=fields.Boolean(string="Show College" ,default=False)
+
+    user_level=fields.Many2many('patient.tags',string="Level")
 
     @api.onchange('patient_id')
     def onchange_patient_id(self):
@@ -49,3 +53,13 @@ class HospitalAppointment(models.Model):
 
 
 
+class Medicine(models.Model):
+    _name = 'hospital.medicine.line'
+    _description = "Medicine"
+
+    product_id = fields.Many2one('product.product' , string="Product" , required=True)
+    product_price=fields.Float(string="Product Price" , related="product_id.list_price")
+    qty=fields.Integer(string="Quantity" ,default=1)
+
+
+    appointment_id=fields.Many2one("hospital.appointment",string="Appointment")

@@ -1,0 +1,49 @@
+<odoo>
+
+    <record id="configurations_tree_view" model="ir.ui.view">
+        <field name="name">Configurations Tree</field>
+        <field name="model">patient.tags</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="tag_name"/>
+                <field name="active"/>
+                <field name="color" widget="color_picker"/>
+                <field name="color_2" widget="color"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="configurations_form_view" model="ir.ui.view">
+        <field name="name">Configurations Form</field>
+        <field name="model">patient.tags</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="tag_name"/>
+                        </group>
+                        <group>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="color" widget="color_picker"/>
+                            <field name="color_2" widget="color"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="configuration_action" model="ir.actions.act_window">
+        <field name="name">patient Configurations</field>
+        <field name="res_model">patient.tags</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="confi_sec_menu"
+            name="Configurations"
+            parent="configurations_menu"
+            action="configuration_action"
+    />
+</odoo>

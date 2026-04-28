@@ -4,7 +4,8 @@
         <field name="name">appointment.tree</field>
         <field name="model">hospital.appointment</field>
         <field name="arch" type="xml">
-            <tree sample="1" multi_edit="1" decoration-success="state=='done'"  decoration-danger="state=='cancel'" decoration-info="state=='draft'" decoration-warning="state=='in_consultation'">
+            <tree sample="1" multi_edit="1" decoration-success="state=='done'" decoration-danger="state=='cancel'"
+                  decoration-info="state=='draft'" decoration-warning="state=='in_consultation'">
                 <field name="patient_id" string="Patient Name"/>
                 <field name="patient_gender" string="Patient Gender"/>
                 <field name="user_id" widget="many2one_avatar_user"/>
@@ -17,6 +18,7 @@
                        decoration-warning="state=='in_consultation'"
                 />
                 <field name="birth_day" string="Patient Birth" optional="hide"/>
+                <field name="user_level" widget="many2many_tags" options="{'color_field':'color'}"/>
             </tree>
         </field>
     </record>
@@ -27,11 +29,16 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="draft_state" type="object" string="Draft" class="oe_highlight" invisible="state != 'in_consultation'" data_hotkey="z"/>
-                    <button name="in_consultation_state" type="object" string="In Consultation" class="oe_highlight" invisible="state != 'draft'" data_hotkey="x"/>
-                    <button name="done_state" type="object" string="Done" class="oe_highlight"  invisible="state != 'in_consultation'" data_hotkey="c"/>
-                    <button name="cancel_state" type="object" string="Cancel" class="oe_highlight" invisible="state != 'in_consultation'" data_hotkey="v"/>
-                    <field  name="state" widget="statusbar" nolabel="1" options="{'clickable':'1'}" statusbar_visible="start,in_progress,draft,done,in_consultation" />
+                    <button name="draft_state" type="object" string="Draft" class="oe_highlight"
+                            invisible="state != 'in_consultation'" data_hotkey="z"/>
+                    <button name="in_consultation_state" type="object" string="In Consultation" class="oe_highlight"
+                            invisible="state != 'draft'" data_hotkey="x"/>
+                    <button name="done_state" type="object" string="Done" class="oe_highlight"
+                            invisible="state != 'in_consultation'" data_hotkey="c"/>
+                    <button name="cancel_state" type="object" string="Cancel" class="oe_highlight"
+                            invisible="state != 'in_consultation'" data_hotkey="v"/>
+                    <field name="state" widget="statusbar" nolabel="1" options="{'clickable':'1'}"
+                           statusbar_visible="start,in_progress,draft,done,in_consultation"/>
                 </header>
                 <sheet>
                     <group>
@@ -39,17 +46,38 @@
                             <field name="patient_id" string="Patient Name" help="User name"/>
                             <field name="user_id" widget="many2one_avatar" default_focus="1"/>
                             <field name="date_now" string="Time Created"/>
+                            <field name="show_col" string="Show Column"/>
                         </group>
                         <group>
                             <field name="patient_gender" string="Patient Gender"/>
                             <field name="patient_ref" string="Patient Code"/>
                             <field name="date_day" string="Day"/>
+                            <field name="user_level" widget="many2many_tags" options="{'color_field':'color'}"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="html_field">
                             <group>
-                                <field string="Html: " name="html_field" options="{'collaborative':true ,'resizable':true}"/>
+                                <field string="Html: " name="html_field"
+                                       options="{'collaborative':true ,'resizable':true}"/>
+                            </group>
+                        </page>
+                        <page string="medicine">
+                            <group>
+                                <field name="medicine_line_ids">
+                                    <tree>
+                                        <field name="product_id"/>
+                                        <field name="product_price" column_invisible="parent.show_col"/>
+                                        <field name="qty"/>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <field name="product_id" string="Product Name"/>
+                                            <field name="product_price"/>
+                                            <field name="qty"/>
+                                        </group>
+                                    </form>
+                                </field>
                             </group>
                         </page>
                     </notebook>

@@ -32,7 +32,7 @@ class HospitalPatient(models.Model):
 
     prescription=fields.Html(string="Prescription")
 
-
+    patient_image=fields.Image(string="Patient Image")
 
     active=fields.Boolean(string="Active",default=True)
 

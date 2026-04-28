@@ -13,4 +13,9 @@
         name="Appointment"
         parent="master_menu"
     />
+    <menuitem
+            id="configurations_menu"
+            name="Configurations"
+            parent="master_menu"
+    />
 </odoo>

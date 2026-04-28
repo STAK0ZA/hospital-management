@@ -19,11 +19,12 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="hello" type="object"  string="Say Hi" class="oe_highlight" confirm="Execute Python Code?"/>
-                    <button name="%(hospital_app.appointment_action)d" type="action"  string="Appointment" class="oe_highlight" confirm="Go to page ?"/>
-                    <field  name="state" widget="statusbar" nolabel="1" options="{'clickable':'1'}" statusbar_visible="start,in_progress,draft,done"/>
+                    <button name="hello" type="object"  string="Say Hi" class="oe_highlight" confirm="Execute Python Code?" groups="base.group_no_one"/>
+                    <button name="%(hospital_app.appointment_action)d" type="action"  string="Appointment" class="oe_highlight" confirm="Go to page ?" groups="base.group_no_one"/>
+                    <field  name="state" widget="statusbar" nolabel="1" options="{'clickable':1}" statusbar_visible="start,in_progress,draft,done" />
                 </header>
                 <sheet>
+                    <field name="patient_image" widget="image" class="oe_avatar"/>
                     <div>
                         <h3>
                             <field name="priority" widget="priority"/>
