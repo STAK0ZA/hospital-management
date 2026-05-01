@@ -18,4 +18,10 @@
             name="Configurations"
             parent="master_menu"
     />
+    <menuitem
+            id="appointment_cancel"
+            name="Cancel Appointment"
+            parent="appointment_id"
+            action="appointment_cancel_actions"
+    />
 </odoo>

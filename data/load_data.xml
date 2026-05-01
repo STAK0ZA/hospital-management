@@ -1,0 +1,11 @@
+<odoo>
+    <record id="tag_vip" model="patient.tags">
+        <field name="tag_name">VIP from xml</field>
+    </record>
+
+    <record id="tag_master" model="patient.tags">
+        <field name="tag_name">Master from xml</field>
+        <field name="active" eval="True" />
+        <field name="color">1</field>
+    </record>
+</odoo>

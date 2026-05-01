@@ -37,6 +37,8 @@
                             invisible="state != 'in_consultation'" data_hotkey="c"/>
                     <button name="cancel_state" type="object" string="Cancel" class="oe_highlight"
                             invisible="state != 'in_consultation'" data_hotkey="v"/>
+<!--                    <button name="cancel_state" type="object" string="Cancel" class="oe_highlight"-->
+<!--                            invisible="state != 'in_consultation'" data_hotkey="v"/>-->
                     <field name="state" widget="statusbar" nolabel="1" options="{'clickable':'1'}"
                            statusbar_visible="start,in_progress,draft,done,in_consultation"/>
                 </header>

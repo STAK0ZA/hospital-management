@@ -1,0 +1,3 @@
+id,tag_name,active,color
+regular_tag,Regular from csv,True,4
+vipp_tag,VIPP from csv,True,3
