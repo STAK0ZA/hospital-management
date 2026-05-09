@@ -8,7 +8,7 @@ class HospitalAppointment(models.Model):
     _rec_name = 'patient_id'
     _description = "Hospital Appointment"
 
-    patient_id = fields.Many2one('hospital.patient' , string="Patient Name")
+    patient_id = fields.Many2one('hospital.patient' , string="Patient Name" ,domain=[('gender','=','male')])
     date_now=fields.Datetime(string="Date of Appointment" ,default=fields.Datetime.now() , help="Created field")
     date_day=fields.Date(string="Date of Appointment" , default=fields.Date.context_today)
     patient_gender=fields.Selection(string="Patient Gender" , related="patient_id.gender")
@@ -52,7 +52,6 @@ class HospitalAppointment(models.Model):
         return action
 
 
-
 class Medicine(models.Model):
     _name = 'hospital.medicine.line'
     _description = "Medicine"
@@ -63,3 +62,5 @@ class Medicine(models.Model):
 
 
     appointment_id=fields.Many2one("hospital.appointment",string="Appointment")
+
+

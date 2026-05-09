@@ -7,6 +7,7 @@
             <tree>
                 <field name="name" string="patient Name"/>
                 <field name="gender" string="patient Gender"/>
+                <field name="ref"/>
                 <field name="age" string="patient Age"/>
                 <field name="code" string="patient Code"/>
             </tree>
@@ -33,12 +34,13 @@
                     <group>
                         <group>
                             <field name="name" string="Patient Name: "/>
-                            <field name="gender" string="Patient Gender: "/>
+                            <field name="gender" string="Patient Gender: " invisible="context.get('hide_marker')"/>
                             <field name="birth_day" string="Date of Birth: "/>
                         </group>
                         <group>
                             <field name="age" string="Patient Age:"/>
                             <field name="code" string="Patient Code:"/>
+                            <field name="ref"/>
                             <field name="active" string="Active" invisible='1'/>
                         </group>
                     </group>

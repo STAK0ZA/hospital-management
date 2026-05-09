@@ -4,3 +4,4 @@ access_hospital_appointment,access_hospital_appointment,model_hospital_appointme
 access_hospital_medicine_line,access_hospital_medicine_line,model_hospital_medicine_line,,1,1,1,1
 access_patient_tags,access_patient_tags,model_patient_tags,,1,1,1,1
 access_appointment_cancel,access_appointment_cancel,model_appointment_cancel,,1,1,1,1
+access_play_ground,access_play_ground,model_play_ground,,1,1,1,1

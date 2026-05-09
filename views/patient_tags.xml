@@ -1,7 +1,7 @@
 <odoo>
 
-    <record id="configurations_tree_view" model="ir.ui.view">
-        <field name="name">Configurations Tree</field>
+    <record id="playground_tree_view" model="ir.ui.view">
+        <field name="name">playground Tree</field>
         <field name="model">patient.tags</field>
         <field name="arch" type="xml">
             <tree>

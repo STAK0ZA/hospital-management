@@ -1,0 +1,45 @@
+<odoo>
+
+    <record id="playground_tree_view" model="ir.ui.view">
+        <field name="name">playground Tree</field>
+        <field name="model">play.ground</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="plaground_form_view" model="ir.ui.view">
+        <field name="name">playground Form</field>
+        <field name="model">play.ground</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="try_some" type="object" string="trysome"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="playground_action" model="ir.actions.act_window">
+        <field name="name">playground</field>
+        <field name="res_model">play.ground</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">inline</field>
+    </record>
+
+        <menuitem
+            id="playground"
+            name="playground"
+            parent="play_main"
+            action="playground_action"
+    />
+
+</odoo>

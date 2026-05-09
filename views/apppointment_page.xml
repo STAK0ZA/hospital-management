@@ -36,11 +36,11 @@
                     <button name="done_state" type="object" string="Done" class="oe_highlight"
                             invisible="state != 'in_consultation'" data_hotkey="c"/>
                     <button name="cancel_state" type="object" string="Cancel" class="oe_highlight"
-                            invisible="state != 'in_consultation'" data_hotkey="v"/>
-<!--                    <button name="cancel_state" type="object" string="Cancel" class="oe_highlight"-->
-<!--                            invisible="state != 'in_consultation'" data_hotkey="v"/>-->
+                            invisible="state != 'in_consultation'" data_hotkey="v" context="{'hide_reason':1}"/>
+<!--                    <button name="%(hospital_app.appointment_cancel_actions)d" type="action" string="Cancel" class="oe_highlight"-->
+<!--                            invisible="state != 'in_consultation'" data_hotkey="v" context="{'default_appointment_id':active_id}"/>-->
                     <field name="state" widget="statusbar" nolabel="1" options="{'clickable':'1'}"
-                           statusbar_visible="start,in_progress,draft,done,in_consultation"/>
+                           statusbar_visible="start,in_progress,draft,done,in_consultation" />
                 </header>
                 <sheet>
                     <group>

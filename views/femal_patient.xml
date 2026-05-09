@@ -4,7 +4,7 @@
         <field name="name">Female Patient Details</field>
         <field name="res_model">hospital.patient</field>
         <field name="domain">[('gender','=','male')]</field>
-        <field name="context">{'default_gender':'female'}</field>
+        <field name="context">{'default_gender':'female','hide_marker':1}</field>
         <field name="view_mode">tree,form</field>
     </record>
 

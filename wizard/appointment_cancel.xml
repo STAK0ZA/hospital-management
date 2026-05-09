@@ -8,7 +8,8 @@
                 <group>
                     <group>
                         <field name="appointment_id"/>
-                        <field name="reason"/>
+                        <field name="reason" invisible="context.get('hide_reason')"/>
+                        <field name="cancel_date"/>
                     </group>
                     <footer>
                         <button name="cancel_appointment" string="Cancel Appointment" type="object" class="btn-primary"/>
