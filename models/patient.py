@@ -1,7 +1,8 @@
 from datetime import date
 from email.policy import default
 
-from odoo import models,fields,api
+from odoo import models,fields,api,_
+from odoo.exceptions import ValidationError
 
 class HospitalPatient(models.Model):
     _name = "hospital.patient"
@@ -15,6 +16,10 @@ class HospitalPatient(models.Model):
     code=fields.Char(string="Code")
     ref=fields.Char(string="Reference")
     birth_day=fields.Date(string="Date of Birth")
+    appointment_count=fields.Integer(string="Appointment" ,compute="_compute_appointment_count" ,store=True)
+    appointment_ids=fields.One2many('hospital.appointment','patient_id',string="Appointments")
+
+
     priority=fields.Selection([
         ("0","Good"),
         ("1","Very Good"),
@@ -82,3 +87,17 @@ class HospitalPatient(models.Model):
             result.append((rec.id, full_name.strip()))
 
         return result
+
+
+    @api.constrains('birth_day')
+    def _check_age(self):
+        for rec in self:
+            if rec.birth_day and rec.birth_day > fields.Date.today():
+                raise ValidationError(_("the entered date is not acceptable"))
+
+
+    @api.depends('appointment_ids')
+    def _compute_appointment_count(self):
+        for rec in self:
+            rec.appointment_count=self.env['hospital.appointment'].search_count([('patient_id','=',rec.name)])
+

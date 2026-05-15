@@ -1,6 +1,8 @@
 from email.policy import default
 
-from odoo import models,fields,api
+from odoo import models,fields,api,_
+from odoo.exceptions import ValidationError
+
 
 class HospitalAppointment(models.Model):
     _name = "hospital.appointment"
@@ -8,7 +10,7 @@ class HospitalAppointment(models.Model):
     _rec_name = 'patient_id'
     _description = "Hospital Appointment"
 
-    patient_id = fields.Many2one('hospital.patient' , string="Patient Name" ,domain=[('gender','=','male')])
+    patient_id = fields.Many2one('hospital.patient' , string="Patient Name" ) #,domain=[('gender','=','male')] for filter the drop list
     date_now=fields.Datetime(string="Date of Appointment" ,default=fields.Datetime.now() , help="Created field")
     date_day=fields.Date(string="Date of Appointment" , default=fields.Date.context_today)
     patient_gender=fields.Selection(string="Patient Gender" , related="patient_id.gender")
@@ -50,6 +52,12 @@ class HospitalAppointment(models.Model):
     def cancel_state(self):
         action=self.env.ref('hospital_app.appointment_cancel_actions').read()[0]
         return action
+
+    def unlink(self):
+        for rec in self:
+            if rec.state != "done":
+                raise ValidationError(_("u only can delete a record in draft state"))
+        return super(HospitalAppointment,self).unlink()
 
 
 class Medicine(models.Model):
