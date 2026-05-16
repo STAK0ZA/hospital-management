@@ -26,22 +26,32 @@
                 </header>
                 <sheet>
                     <field name="patient_image" widget="image" class="oe_avatar"/>
-                    <div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ref" readonly="1"/>
+                        </h1>
+                        <h2>
+                            <field name="name" string="Patient Name: "/>
+                        </h2>
                         <h3>
                             <field name="priority" widget="priority"/>
                         </h3>
                     </div>
                     <group>
                         <group>
-                            <field name="name" string="Patient Name: "/>
                             <field name="gender" string="Patient Gender: " invisible="context.get('hide_marker')"/>
                             <field name="birth_day" string="Date of Birth: "/>
+                            <field name="appointment_count" string="Appointment Count"/>
                         </group>
                         <group>
                             <field name="age" string="Patient Age:"/>
                             <field name="code" string="Patient Code:"/>
-                            <field name="ref"/>
                             <field name="active" string="Active" invisible='1'/>
+                        </group>
+                        <group string="Other Information">
+                            <field name="parent_name" invisible="age > 18"/>
+                            <field name="marital_status"/>
+                            <field name="partner_name" required="marital_status == 'married'" readonly="marital_status == 'single'"/>
                         </group>
                     </group>
 

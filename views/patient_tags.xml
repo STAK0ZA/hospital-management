@@ -27,6 +27,7 @@
                             <field name="active" widget="boolean_toggle"/>
                             <field name="color" widget="color_picker"/>
                             <field name="color_2" widget="color"/>
+                            <field name="seq" widget="Sequence"/>
                         </group>
                     </group>
                 </sheet>

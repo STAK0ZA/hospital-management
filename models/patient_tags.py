@@ -1,11 +1,13 @@
 from odoo import api, fields, models,_
+from odoo.api import ondelete
+
 
 class PatientTags(models.Model):
     _name = 'patient.tags'
     _description = 'Patient Tags'
     _rec_name = 'tag_name'
 
-    tag_name=fields.Char(string="Patient Tag Name")
+    tag_name=fields.Char(string="Patient Tag Name" ,ondelete="restrict")
     active=fields.Boolean(default=True)
     seq=fields.Integer(string="Sequence" ,default=0)
     color=fields.Integer(string="Patient color_picker" )

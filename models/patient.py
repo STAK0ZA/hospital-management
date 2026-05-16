@@ -19,6 +19,13 @@ class HospitalPatient(models.Model):
     appointment_count=fields.Integer(string="Appointment" ,compute="_compute_appointment_count" ,store=True)
     appointment_ids=fields.One2many('hospital.appointment','patient_id',string="Appointments")
 
+    parent_name = fields.Char(string="Parent Name")
+    marital_status=fields.Selection([
+        ('married','Married'),
+        ('single','Single')
+    ],default="single")
+    partner_name=fields.Char(string="Partner Name")
+
 
     priority=fields.Selection([
         ("0","Good"),
