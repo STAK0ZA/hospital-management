@@ -30,7 +30,7 @@ class AppointmentCancelWizard(models.TransientModel):
             if rec.cancel_date.date() == rec.appointment_id.date_now.date():
                 raise ValidationError(_("sorry u cant cancel in same date"))
             else:
-                print("hiiii22222222222222")
+                rec.appointment_id.state = "cancel"
 
         return
 

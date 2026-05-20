@@ -48,6 +48,13 @@ class HospitalAppointment(models.Model):
         for rec in self:
             rec.state = "done"
 
+    # def cancel_state(self):
+    #     for rec in self:
+    #         rec.state = "cancel"
+
+    def hello_button_treee(self):
+        print("Hellllo from tree button...................!!")
+        return
 
     def cancel_state(self):
         action=self.env.ref('hospital_app.appointment_cancel_actions').read()[0]
@@ -58,6 +65,7 @@ class HospitalAppointment(models.Model):
     #         if rec.state != "done":
     #             raise ValidationError(_("u only can delete a record in draft state"))
     #     return super(HospitalAppointment,self).unlink()
+
 
 
 class Medicine(models.Model):

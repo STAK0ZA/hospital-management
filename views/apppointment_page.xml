@@ -6,6 +6,12 @@
         <field name="arch" type="xml">
             <tree sample="1" multi_edit="1" decoration-success="state=='done'" decoration-danger="state=='cancel'"
                   decoration-info="state=='draft'" decoration-warning="state=='in_consultation'">
+
+                <header>
+                    <button name="hello_button_treee" string="hello" type="object"/>
+                    <button name="in_consultation_state" type="object" string="In Consultation" class="oe_highlight"/>
+                </header>
+
                 <field name="patient_id" string="Patient Name"/>
                 <field name="patient_gender" string="Patient Gender"/>
                 <field name="user_id" widget="many2one_avatar_user"/>
@@ -19,6 +25,13 @@
                 />
                 <field name="birth_day" string="Patient Birth" optional="hide"/>
                 <field name="user_level" widget="many2many_tags" options="{'color_field':'color'}"/>
+                <button name="done_state" type="object" icon="fa-check" class="oe_highlight"/>
+                <button name="cancel_state" type="object" string="Cancel" icon="fa-times" class="oe_highlight" invisible="state != 'in_consultation'"/>
+
+                <groupby name="patient_id">
+                    <button name="hi" type="object" string="hi"/>
+<!--                    <button name="edit" string="Edit" type="edit"/>-->
+                </groupby>
             </tree>
         </field>
     </record>
@@ -37,10 +50,10 @@
                             invisible="state != 'in_consultation'" data_hotkey="c"/>
                     <button name="cancel_state" type="object" string="Cancel" class="oe_highlight"
                             invisible="state != 'in_consultation'" data_hotkey="v" context="{'hide_reason':1}"/>
-<!--                    <button name="%(hospital_app.appointment_cancel_actions)d" type="action" string="Cancel" class="oe_highlight"-->
-<!--                            invisible="state != 'in_consultation'" data_hotkey="v" context="{'default_appointment_id':active_id}"/>-->
+                    <!--                    <button name="%(hospital_app.appointment_cancel_actions)d" type="action" string="Cancel" class="oe_highlight"-->
+                    <!--                            invisible="state != 'in_consultation'" data_hotkey="v" context="{'default_appointment_id':active_id}"/>-->
                     <field name="state" widget="statusbar" nolabel="1" options="{'clickable':'1'}"
-                           statusbar_visible="start,in_progress,draft,done,in_consultation" />
+                           statusbar_visible="start,in_progress,draft,done,in_consultation"/>
                 </header>
                 <sheet>
                     <group>

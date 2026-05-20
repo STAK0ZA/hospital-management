@@ -31,7 +31,8 @@
                             <field name="ref" readonly="1"/>
                         </h1>
                         <h2>
-                            <field name="name" string="Patient Name: "/>
+                            <label for="name" string="Name"  class="oe_edit_only"/>
+                            <field name="name" />
                         </h2>
                         <h3>
                             <field name="priority" widget="priority"/>
@@ -39,7 +40,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="gender" string="Patient Gender: " invisible="context.get('hide_marker')"/>
+                            <field name="gender" string="Patient Gender: " invisible="context.get('hide_marker')" widget="radio"/>
                             <field name="birth_day" string="Date of Birth: "/>
                             <field name="appointment_count" string="Appointment Count"/>
                         </group>
@@ -94,7 +95,7 @@
             <search>
                 <field name="name" string="Patient Name"
                        filter_domain="['|',('name','ilike',self),('code','ilike',self)]"/>
-                <!--                <field name="age" string="Patient Age"/>-->
+                <field name="age" string="Patient Age"/>
 
                 <filter name="archive" string="Archive" domain="[('active','=',False)]"/>
 

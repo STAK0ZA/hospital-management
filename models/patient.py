@@ -1,8 +1,11 @@
 from datetime import date
 from email.policy import default
 
+from dateutil.relativedelta import relativedelta
+
 from odoo import models,fields,api,_
 from odoo.exceptions import ValidationError
+# from dateutil.relativedelta import relativedelta
 
 class HospitalPatient(models.Model):
     _name = "hospital.patient"
@@ -11,7 +14,7 @@ class HospitalPatient(models.Model):
     # _rec_name = 'ref'
 
     name=fields.Char(string="Patient" ,tracking=True)
-    age=fields.Integer(string="age",tracking=True ,compute='_compute_date')
+    age=fields.Integer(string="age",tracking=True ,compute='_compute_date' ,inverse="_inverse_age" ,search='_search_by_age')
     gender=fields.Selection([('male','Male'),('female','Female')],string="Gender")
     code=fields.Char(string="Code")
     ref=fields.Char(string="Reference")
@@ -86,6 +89,15 @@ class HospitalPatient(models.Model):
             vals['ref']=self.env['ir.sequence'].next_by_code('patient.sequence.id')
         return super().write(vals)
 
+    def _search_by_age(self,operator,value):
+        # value = int(value)
+        return [
+            ('birth_day','>',date.today()-relativedelta(years=value+1)),
+            ('birth_day','<=',date.today()-relativedelta(years=value)),
+        ]
+        # return [ ('birth_day','=','05/20/2004')]
+        # return [ ('id','=',24)]
+
     def _name_get(self):
         result = []
 
@@ -95,6 +107,17 @@ class HospitalPatient(models.Model):
 
         return result
 
+    def hello_button_tree(self):
+        print("Hellllo from tree button...................!!")
+        return
+    def hi(self):
+        print("hiiiiiiiiii-----------")
+
+    @api.depends('age')
+    def _inverse_age(self):
+        today=date.today()
+        for rec in self:
+            rec.birth_day = today-relativedelta(years=rec.age)
 
     @api.constrains('birth_day')
     def _check_age(self):
@@ -107,4 +130,11 @@ class HospitalPatient(models.Model):
     def _compute_appointment_count(self):
         for rec in self:
             rec.appointment_count=self.env['hospital.appointment'].search_count([('patient_id','=',rec.name)])
+
+    @api.ondelete(at_uninstall=False)
+    def _check_appointment(self):
+        for rec in self:
+            if rec.appointment_ids:
+                raise ValidationError(_("can't delete patient with appointment"))
+
 
