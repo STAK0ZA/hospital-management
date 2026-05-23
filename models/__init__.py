@@ -3,3 +3,5 @@ from . import appointment
 from . import patient_tags
 from . import product_inhherit
 from . import playground
+from . import settings
+from . import operation

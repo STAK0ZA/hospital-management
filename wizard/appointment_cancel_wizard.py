@@ -32,7 +32,10 @@ class AppointmentCancelWizard(models.TransientModel):
             else:
                 rec.appointment_id.state = "cancel"
 
-        return
+        return {
+            'type': 'ir.actions.client',
+            'tag':'reload'
+        }
 
 
 

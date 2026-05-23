@@ -16,6 +16,8 @@
         "views/patient_tags.xml",
         "views/product_template_inherit.xml",
         "views/playground.xml",
+        "views/settings.xml",
+        "views/operation_view.xml",
 
     ],
     'application': True,

@@ -21,6 +21,7 @@
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="code" widget="ace" mode="xml"/>
 
                     </group>
                 </sheet>
@@ -35,7 +36,7 @@
         <field name="target">inline</field>
     </record>
 
-        <menuitem
+    <menuitem
             id="playground"
             name="playground"
             parent="play_main"

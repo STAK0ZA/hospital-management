@@ -6,7 +6,6 @@ class ProductInherital(models.Model):
     koko_field=fields.Char(string="Koko Field")
 
 
-
     def action_confirm(self):
         print("hi--------------------------------..............")
         return super().action_confirm()

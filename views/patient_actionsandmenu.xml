@@ -8,8 +8,9 @@
                 <field name="name" string="patient Name"/>
                 <field name="gender" string="patient Gender"/>
                 <field name="ref"/>
-                <field name="age" string="patient Age"/>
-                <field name="code" string="patient Code"/>
+                <field name="age" string="patient Age" avg="Average age"/>
+                 <field name="ref"/>
+                <field name="appointment_count" string="Appointment Count" sum="Sum of appointment"/>
             </tree>
         </field>
     </record>
@@ -25,6 +26,15 @@
                     <field  name="state" widget="statusbar" nolabel="1" options="{'clickable':1}" statusbar_visible="start,in_progress,draft,done" />
                 </header>
                 <sheet>
+                    <div class="alert alert-info text-center o_form_header" role="alert" invisible="is_this_birth != True">
+                        <a class="close float-end" data-bs-dismiss="alert" href="#">X</a>
+                        <div>
+                            <strong>Today is birthday !</strong>
+                        </div>
+                        <div>
+                            wish <field name="name" readonly="1"/>
+                        </div>
+                    </div>
                     <field name="patient_image" widget="image" class="oe_avatar"/>
                     <div class="oe_title">
                         <h1>
@@ -33,6 +43,7 @@
                         <h2>
                             <label for="name" string="Name"  class="oe_edit_only"/>
                             <field name="name" />
+                            <field name="is_this_birth" invisible="1"/>
                         </h2>
                         <h3>
                             <field name="priority" widget="priority"/>
@@ -53,6 +64,11 @@
                             <field name="parent_name" invisible="age > 18"/>
                             <field name="marital_status"/>
                             <field name="partner_name" required="marital_status == 'married'" readonly="marital_status == 'single'"/>
+                        </group>
+                        <group>
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="url" widget="url"/>
                         </group>
                     </group>
 

@@ -24,13 +24,14 @@
                        decoration-warning="state=='in_consultation'"
                 />
                 <field name="birth_day" string="Patient Birth" optional="hide"/>
-                <field name="user_level" widget="many2many_tags" options="{'color_field':'color'}"/>
+                <field name="user_level" widget="many2many_widget" options="{'color_field':'color'}"/>
                 <button name="done_state" type="object" icon="fa-check" class="oe_highlight"/>
-                <button name="cancel_state" type="object" string="Cancel" icon="fa-times" class="oe_highlight" invisible="state != 'in_consultation'"/>
+                <button name="cancel_state" type="object" string="Cancel" icon="fa-times" class="oe_highlight"
+                        invisible="state != 'in_consultation'"/>
 
                 <groupby name="patient_id">
                     <button name="hi" type="object" string="hi"/>
-<!--                    <button name="edit" string="Edit" type="edit"/>-->
+                    <!--                    <button name="edit" string="Edit" type="edit"/>-->
                 </groupby>
             </tree>
         </field>
@@ -58,16 +59,17 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="patient_id" string="Patient Name" help="User name"/>
+                            <field name="patient_id" string="Patient Name" help="User name" widget="selection"/>
                             <field name="user_id" widget="many2one_avatar" default_focus="1"/>
                             <field name="date_now" string="Time Created"/>
                             <field name="show_col" string="Show Column"/>
+                            <field name="operation"/>
                         </group>
                         <group>
                             <field name="patient_gender" string="Patient Gender"/>
                             <field name="patient_ref" string="Patient Code"/>
                             <field name="date_day" string="Day"/>
-                            <field name="user_level" widget="many2many_tags" options="{'color_field':'color'}"/>
+                            <field name="user_level" widget="many2many_checkboxes" options="{'color_field':'color'}"/>
                         </group>
                     </group>
                     <notebook>
@@ -103,6 +105,19 @@
                     <field name="message_ids"/>
                 </div>
             </form>
+        </field>
+    </record>
+
+    <record id="in_consultation_action" model="ir.actions.server">
+        <field name="name">Done</field>
+        <field name="model_id" ref="model_hospital_appointment"/>
+        <field name="binding_model_id" ref="model_hospital_appointment"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            for record in records:
+                if record.state=='in_consultation':
+                    record.done_state()
         </field>
     </record>
 

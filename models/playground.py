@@ -5,6 +5,7 @@ class playground(models.Model):
     _description = 'Playground'
 
     name=fields.Char(string="playground name")
+    code=fields.Text(string="playground code")
 
     def try_some(self):
         print(self.env.ref('hospital_app.tag_master').tag_name)

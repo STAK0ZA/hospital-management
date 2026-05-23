@@ -12,6 +12,7 @@ class HospitalPatient(models.Model):
     _inherit = ['mail.thread','mail.activity.mixin']
     _description = "Hospital Patient"
     # _rec_name = 'ref'
+    _order='id desc'
 
     name=fields.Char(string="Patient" ,tracking=True)
     age=fields.Integer(string="age",tracking=True ,compute='_compute_date' ,inverse="_inverse_age" ,search='_search_by_age')
@@ -52,6 +53,12 @@ class HospitalPatient(models.Model):
     patient_image=fields.Image(string="Patient Image")
 
     active=fields.Boolean(string="Active",default=True)
+    is_this_birth=fields.Boolean(string="Is this birth?" ,compute="_compute_date_birth")
+
+    phone=fields.Char(string="Phone")
+    email=fields.Char(string="Email")
+    url=fields.Char(string="URL")
+
 
     @api.depends('birth_day')
     def _compute_date(self):
@@ -76,7 +83,7 @@ class HospitalPatient(models.Model):
     @api.model
     def create(self,vals):
         print("created new record............................_____________")
-        if not vals['ref'] :
+        if not vals.get('ref') :
             vals['ref']=self.env['ir.sequence'].next_by_code('patient.sequence.id')
 
         return super().create(vals)
@@ -136,5 +143,17 @@ class HospitalPatient(models.Model):
         for rec in self:
             if rec.appointment_ids:
                 raise ValidationError(_("can't delete patient with appointment"))
+
+    @api.depends('birth_day')
+    def _compute_date_birth(self):
+        for rec in self:
+            rec.is_this_birth=False
+            if rec.birth_day:
+                today=date.today()
+                if rec.birth_day.month==today.month and rec.birth_day.day == today.day:
+                    rec.is_this_birth = True
+
+
+
 
 

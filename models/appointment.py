@@ -32,6 +32,8 @@ class HospitalAppointment(models.Model):
 
     user_level=fields.Many2many('patient.tags',string="Level")
 
+    operation=fields.Many2one('hospital.operation',string="Operation" )
+
     @api.onchange('patient_id')
     def onchange_patient_id(self):
         self.patient_ref = self.patient_id.code
@@ -65,6 +67,7 @@ class HospitalAppointment(models.Model):
     #         if rec.state != "done":
     #             raise ValidationError(_("u only can delete a record in draft state"))
     #     return super(HospitalAppointment,self).unlink()
+
 
 
 
