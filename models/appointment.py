@@ -17,6 +17,7 @@ class HospitalAppointment(models.Model):
     birth_day=fields.Date(string="Patient Birth" , related="patient_id.birth_day")
     patient_ref=fields.Char(string="Patient Reference")
     html_field=fields.Html(string="HTML Field")
+    duration=fields.Float(string="Duration")
     state=fields.Selection([
         ("draft","Draft"),
         ("in_consultation","In Consultation"),
@@ -33,6 +34,10 @@ class HospitalAppointment(models.Model):
     user_level=fields.Many2many('patient.tags',string="Level")
 
     operation=fields.Many2one('hospital.operation',string="Operation" )
+
+    bar = fields.Integer(string="Bar" ,compute="_compute_percentage")
+
+
 
     @api.onchange('patient_id')
     def onchange_patient_id(self):
@@ -69,7 +74,17 @@ class HospitalAppointment(models.Model):
     #     return super(HospitalAppointment,self).unlink()
 
 
+    @api.depends('state')
+    def _compute_percentage(self):
+        for rec in self:
+            if rec.state == "done":
+                rec.bar=100
+            elif rec.state == "in_consultation":
+                rec.bar=75
+            elif rec.state == "draft" or rec.state == "cancel":
+                rec.bar=0
 
+        pass
 
 class Medicine(models.Model):
     _name = 'hospital.medicine.line'

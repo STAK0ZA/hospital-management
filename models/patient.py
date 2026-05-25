@@ -132,11 +132,39 @@ class HospitalPatient(models.Model):
             if rec.birth_day and rec.birth_day > fields.Date.today():
                 raise ValidationError(_("the entered date is not acceptable"))
 
+    # this function to count the number of appointment
+    # @api.depends('appointment_ids')
+    # def _compute_appointment_count(self):
+    #     for rec in self:
+    #         rec.appointment_count=self.env['hospital.appointment'].search_count([('patient_id','=',rec.name)])
 
     @api.depends('appointment_ids')
     def _compute_appointment_count(self):
         for rec in self:
-            rec.appointment_count=self.env['hospital.appointment'].search_count([('patient_id','=',rec.name)])
+            rec.appointment_count=0
+        appointment_group = self.env['hospital.appointment'].read_group(
+            domain=[],
+            fields=['patient_id'],
+            groupby=['patient_id'],
+        )
+        for appointment in appointment_group:
+            patient_id = appointment.get('patient_id')[0]
+            patient_rec=self.browse([patient_id])
+            patient_rec.appointment_count=appointment['patient_id_count']
+        # print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11",appointment_group)
+
+    def show_appointment(self):
+        return{
+            'name': _('Appointment'),
+            'view_mode': 'list,form',
+            'res_model': 'hospital.appointment',
+            'domain': [('patient_id','=',self.id)],
+            'context': {'default_patient_id':self.id},
+            'target': 'current',
+            'type': 'ir.actions.act_window',
+            # 'context': {'default_type': self.type}
+
+        }
 
     @api.ondelete(at_uninstall=False)
     def _check_appointment(self):

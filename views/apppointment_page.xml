@@ -1,4 +1,14 @@
 <odoo>
+    <record id="appointment_calendar_view" model="ir.ui.view">
+        <field name="name">appointment.calendar</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <calendar string="Appointment" date_start="date_day" mode="month" color="state" date_delay="duration" event_open_popup="true" hide_time="true"   quick_create="false">
+                <field name="patient_id"/>
+                <field name="state" invisible="1" filters="1"/>
+            </calendar>
+        </field>
+    </record>
 
     <record id="appointment_tree_view" model="ir.ui.view">
         <field name="name">appointment.tree</field>
@@ -63,6 +73,7 @@
                             <field name="user_id" widget="many2one_avatar" default_focus="1"/>
                             <field name="date_now" string="Time Created"/>
                             <field name="show_col" string="Show Column"/>
+                            <field name="duration" />
                             <field name="operation"/>
                         </group>
                         <group>
@@ -77,6 +88,9 @@
                             <group>
                                 <field string="Html: " name="html_field"
                                        options="{'collaborative':true ,'resizable':true}"/>
+                                <field name="bar" widget="progressbar"/>
+                                <field name="bar" widget="gauge"/>
+                                <field name="bar" widget="percentpie"/>
                             </group>
                         </page>
                         <page string="medicine">
@@ -124,7 +138,7 @@
     <record id="appointment_action" model="ir.actions.act_window">
         <field name="name">patient appointment</field>
         <field name="res_model">hospital.appointment</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,calendar</field>
     </record>
 
     <menuitem

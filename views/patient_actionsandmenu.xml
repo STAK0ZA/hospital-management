@@ -26,6 +26,11 @@
                     <field  name="state" widget="statusbar" nolabel="1" options="{'clickable':1}" statusbar_visible="start,in_progress,draft,done" />
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="show_appointment" type="object" class="oe_stat_button" icon="fa-star">
+                            <field string="Appointments" name="appointment_count" widget="statinfo"/>
+                        </button>
+                    </div>
                     <div class="alert alert-info text-center o_form_header" role="alert" invisible="is_this_birth != True">
                         <a class="close float-end" data-bs-dismiss="alert" href="#">X</a>
                         <div>
