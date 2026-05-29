@@ -5,10 +5,10 @@
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name" string="patient Name"/>
-                <field name="gender" string="patient Gender"/>
+                <field name="name" string="patient Name" decoration-bf="1" decoration-it="1" decoration-success="1"/>
+                <field name="gender" string="patient Gender" decoration-danger="gender == 'female'" decoration-it="gender == 'female'" decoration-warning="gender == 'male'"/>
                 <field name="ref"/>
-                <field name="age" string="patient Age" avg="Average age"/>
+                <field name="age" string="patient Age" avg="Average age" />
                  <field name="ref"/>
                 <field name="appointment_count" string="Appointment Count" sum="Sum of appointment"/>
             </tree>

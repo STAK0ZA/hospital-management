@@ -14,8 +14,8 @@ class HospitalPatient(models.Model):
     # _rec_name = 'ref'
     _order='id desc'
 
-    name=fields.Char(string="Patient" ,tracking=True)
-    age=fields.Integer(string="age",tracking=True ,compute='_compute_date' ,inverse="_inverse_age" ,search='_search_by_age')
+    name=fields.Char(string="Patient" ,tracking=1)
+    age=fields.Integer(string="age",tracking=2 ,compute='_compute_date' ,inverse="_inverse_age" ,search='_search_by_age')
     gender=fields.Selection([('male','Male'),('female','Female')],string="Gender")
     code=fields.Char(string="Code")
     ref=fields.Char(string="Reference")
@@ -70,15 +70,13 @@ class HospitalPatient(models.Model):
                 rec.age= 1
 
     def hello(self):
-        print("hello!!!!!!!!!!!!!!!!!!!!!!!!")
         return{
-            'effect':{
-                'fadeout':'slow',
-                'message':'Hello User',
-                'type':'rainbow_man'
-
-            }
+            'type':'ir.actions.act_url',
+            'target':'new',
+            'url':'http://odoo.com'
         }
+
+
 
     @api.model
     def create(self,vals):

@@ -100,6 +100,8 @@
                                         <field name="product_id"/>
                                         <field name="product_price" column_invisible="parent.show_col"/>
                                         <field name="qty"/>
+                                        <field name="total_price" sum="Total Sales"/>
+                                        <field name="currency_id" column_invisible="1" />
                                     </tree>
                                     <form>
                                         <group>

@@ -1,5 +1,7 @@
 from email.policy import default
 
+from requests.utils import default_user_agent
+
 from odoo import models,fields,api,_
 from odoo.exceptions import ValidationError
 
@@ -54,6 +56,13 @@ class HospitalAppointment(models.Model):
     def done_state(self):
         for rec in self:
             rec.state = "done"
+        return {
+            'effect': {
+                'fadeout': 'slow',
+                'message': 'Done successfully',
+                'type': 'rainbow_man'
+            }
+        }
 
     # def cancel_state(self):
     #     for rec in self:
@@ -91,10 +100,20 @@ class Medicine(models.Model):
     _description = "Medicine"
 
     product_id = fields.Many2one('product.product' , string="Product" , required=True)
-    product_price=fields.Float(string="Product Price" , related="product_id.list_price")
+    product_price=fields.Float(string="Product Price" , default=100)
     qty=fields.Integer(string="Quantity" ,default=1)
+
+    company_id=fields.Many2one('res.company' , default= lambda self: self.env.company)
+
+    currency_id=fields.Many2one('res.currency' , string="Currency" ,related="company_id.currency_id")
+    total_price=fields.Monetary(string="Total Price" ,default=0,compute="_compute_product_price")
 
 
     appointment_id=fields.Many2one("hospital.appointment",string="Appointment")
+
+    @api.depends('product_id','qty')
+    def _compute_product_price(self):
+        for rec in self:
+            rec.total_price=rec.product_price*rec.qty
 
 
