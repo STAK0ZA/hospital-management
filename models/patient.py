@@ -164,6 +164,15 @@ class HospitalPatient(models.Model):
 
         }
 
+    def try_some(self):
+        vals={'name':'KAREEM HANY','age':'300','gender':'male'}
+        # records=self.env['hospital.patient'].browse([21,22])
+        # for rec in records:
+        #     print(rec.name)
+        # print(self.env['hospital.patient'].search_count([('gender','=','male')]))
+        print(self.env['hospital.patient'].browse(21).get_metadata()[0].get("create_uid")[1])
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
     @api.ondelete(at_uninstall=False)
     def _check_appointment(self):
         for rec in self:

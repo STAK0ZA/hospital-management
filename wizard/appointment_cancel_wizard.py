@@ -33,8 +33,11 @@ class AppointmentCancelWizard(models.TransientModel):
                 rec.appointment_id.state = "cancel"
 
         return {
-            'type': 'ir.actions.client',
-            'tag':'reload'
+            'type': 'ir.actions.act_window',
+            'view_mode':'form',
+            'res_model':'appointment.cancel',
+            'target':'new',
+            'res_id':self.id,
         }
 
 

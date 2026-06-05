@@ -2,7 +2,7 @@
     'name': 'Hospital App',
     'author': 'Stakoza',
     'version': '17.0.0.1.0',
-    'depends': ['base','mail','product','sale'],
+    'depends': ['base','mail','product','sale','account'],
     'data': [
         "security/ir.model.access.csv",
         "data/load_data.xml",
@@ -18,6 +18,7 @@
         "views/playground.xml",
         "views/settings.xml",
         "views/operation_view.xml",
+        "views/invoice_inherit.xml",
 
     ],
     'application': True,

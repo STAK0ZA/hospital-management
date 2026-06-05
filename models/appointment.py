@@ -83,6 +83,21 @@ class HospitalAppointment(models.Model):
     #     return super(HospitalAppointment,self).unlink()
 
 
+    def send_message(self):
+        if not self.patient_id.phone:
+            raise ValidationError(_("there is problem no phone "))
+        phone=self.patient_id.phone
+        text='Hello %s is ur gender %s '%(self.patient_id.name,self.patient_id.gender)
+        whats_url='https://api.whatsapp.com/send?phone=%s&text=%s'%(phone,text)
+
+        return{
+            'type':'ir.actions.act_url',
+            'target':'new',
+            'url':whats_url
+        }
+
+
+
     @api.depends('state')
     def _compute_percentage(self):
         for rec in self:
@@ -100,7 +115,7 @@ class Medicine(models.Model):
     _description = "Medicine"
 
     product_id = fields.Many2one('product.product' , string="Product" , required=True)
-    product_price=fields.Float(string="Product Price" , default=100)
+    product_price=fields.Float(string="Product Price" , default=100 ,digits="Percentage Analytic")
     qty=fields.Integer(string="Quantity" ,default=1)
 
     company_id=fields.Many2one('res.company' , default= lambda self: self.env.company)

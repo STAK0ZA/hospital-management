@@ -53,6 +53,8 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <button name="send_message" type="object" string="WhatsApp Message" class="oe_highlight" />
+
                     <button name="draft_state" type="object" string="Draft" class="oe_highlight"
                             invisible="state != 'in_consultation'" data_hotkey="z"/>
                     <button name="in_consultation_state" type="object" string="In Consultation" class="oe_highlight"
@@ -98,7 +100,7 @@
                                 <field name="medicine_line_ids">
                                     <tree>
                                         <field name="product_id"/>
-                                        <field name="product_price" column_invisible="parent.show_col"/>
+                                        <field name="product_price" column_invisible="parent.show_col" field_digits="true" />
                                         <field name="qty"/>
                                         <field name="total_price" sum="Total Sales"/>
                                         <field name="currency_id" column_invisible="1" />
