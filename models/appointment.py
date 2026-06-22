@@ -2,6 +2,7 @@ from email.policy import default
 
 from requests.utils import default_user_agent
 
+# from app_one.models import tag
 from odoo import models,fields,api,_
 from odoo.exceptions import ValidationError
 
@@ -89,13 +90,36 @@ class HospitalAppointment(models.Model):
         phone=self.patient_id.phone
         text='Hello %s is ur gender %s '%(self.patient_id.name,self.patient_id.gender)
         whats_url='https://api.whatsapp.com/send?phone=%s&text=%s'%(phone,text)
+        self.message_post(body=text,subject="message")
 
         return{
             'type':'ir.actions.act_url',
             'target':'new',
             'url':whats_url
         }
-
+    def notification_action(self):
+        message = "hello from notification"
+        action=self.env.ref('hospital_app.patient_details_window')
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': message,
+                'message': '%s',
+                'links':[{
+                    'label': self.patient_id.name,
+                    'url':f'#action={action.id}&id={self.patient_id.id}&model="hospital.patient"&view_type=form',
+                }],
+                'type': 'success',
+                'sticky': False,
+                'next':{
+                    'type': 'ir.actions.act_window',
+                    'res_model': 'hospital.patient',
+                    "res_id":self.patient_id.id,
+                    'views':[(False,'form')]
+                }
+            }
+        }
 
 
     @api.depends('state')

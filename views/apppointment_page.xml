@@ -77,6 +77,7 @@
                             <field name="show_col" string="Show Column"/>
                             <field name="duration" />
                             <field name="operation"/>
+                            <button name="notification_action" type="object" class="oe_highlight" string="Notification"/>
                         </group>
                         <group>
                             <field name="patient_gender" string="Patient Gender"/>
